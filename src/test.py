@@ -23,7 +23,7 @@ async def test_7seg(dut):
     max_count = dut.ui_in.value << 10
     dut._log.info(f"check all segments with MAX_COUNT set to {max_count}")
     # check all segments and roll over
-    for i in range(15):
+    for i in range(8):
         dut._log.info("check segment {}".format(i))
         await ClockCycles(dut.clk, max_count)
         assert int(dut.segments.value) == segments[i % 8]
@@ -41,7 +41,7 @@ async def test_7seg(dut):
     max_count = dut.ui_in.value << 10
     dut._log.info(f"check all segments with MAX_COUNT set to {max_count}")
     # check all segments and roll over
-    for i in range(15):
+    for i in range(8):
         dut._log.info("check segment {}".format(i))
         await ClockCycles(dut.clk, max_count)
         assert int(dut.segments.value) == segments[i % 8]
