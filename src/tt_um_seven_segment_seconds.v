@@ -25,32 +25,33 @@ module tt_um_seven_segment_seconds #( parameter MAX_COUNT = 24'd10_000_000 ) (
     // external clock is 10MHz, so need 24 bit counter
     reg [23:0] second_counter;
     reg [3:0] digit;
+    reg reloj;
 
     // if external inputs are set then use that as compare count
     // otherwise use the hard coded MAX_COUNT
     wire [23:0] compare = ui_in == 0 ? MAX_COUNT: {6'b0, ui_in[7:0], 10'b0};
 
+
     always @(posedge clk) begin
-        // if reset, set counter to 0
+        second_counter <= second_counter + 1;
+        if(csecond_counter == 5000000) begin
+            second_counter <= 0;
+            reloj <= ~reloj;
+        end
+    end
+    
+    
+    always @(posedge reloj) begin
         if (reset) begin
             second_counter <= 0;
             digit <= 0;
         end else begin
-            // if up to 16e6
-            if (second_counter == compare) begin
+            if (digit == 7) begin
                 // reset
-                second_counter <= 0;
-
-                // increment digit
-                digit <= digit + 1'b1;
-
-                // only count from 0 to 9
-                if (digit == 7)
-                    digit <= 0;
-
+                digit <= 0;
             end else
                 // increment counter
-                second_counter <= second_counter + 1'b1;
+                digit <= digit + 1'b1;
         end
     end
 
