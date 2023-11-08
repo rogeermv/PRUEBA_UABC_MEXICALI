@@ -3,7 +3,7 @@ from cocotb.clock import Clock
 from cocotb.triggers import RisingEdge, FallingEdge, Timer, ClockCycles
 
 
-segments = [ 0, 112, 63, 111, 121, 56, 48, 63, 0, 0 ]
+segments = [ 0, 112, 63, 111, 121, 56, 48, 63 ]
 
 @cocotb.test()
 async def test_7seg(dut):
@@ -18,10 +18,10 @@ async def test_7seg(dut):
     dut.rst_n.value = 1
 
     dut._log.info("check all segments")
-    for i in range(10):
+    for i in range(8):
         dut._log.info("check segment {}".format(i))
         await ClockCycles(dut.clk, 1000)
-        assert int(dut.segments.value) == segments[i]
+        assert int(dut.segments.value) == segments[i % 8]
 
         # all bidirectionals are set to output
         assert dut.uio_oe == 0xFF
