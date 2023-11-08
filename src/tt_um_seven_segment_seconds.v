@@ -41,7 +41,7 @@ module tt_um_seven_segment_seconds #( parameter MAX_COUNT = 24'd10_000_000 ) (
                 digit <= digit + 1'b1;
 
                 // only count from 0 to 7
-                if (digit == 7)
+                if (digit == 9)
                     digit <= 0;
 
             end else
