@@ -34,7 +34,7 @@ module tt_um_seven_segment_seconds #( parameter MAX_COUNT = 24'd10_000_000 ) (
 
     always @(posedge clk) begin
         second_counter <= second_counter + 1;
-        if(csecond_counter == 5000000) begin
+        if(second_counter == 5000000) begin
             second_counter <= 0;
             reloj <= ~reloj;
         end
